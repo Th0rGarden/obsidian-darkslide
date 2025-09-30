@@ -10,16 +10,10 @@ const DEFAULT_SETTINGS: BrightnessSettings = {
 
 export default class DarkSlidePlugin extends Plugin {
 	settings: BrightnessSettings;
-	styleEl: HTMLStyleElement;
 	statusBarItem: HTMLElement;
 
 	async onload() {
 		await this.loadSettings();
-
-		// Create style element for our CSS
-		this.styleEl = document.createElement('style');
-		this.styleEl.id = 'background-brightness-style';
-		document.head.appendChild(this.styleEl);
 
 		// Apply initial brightness
 		this.applyBrightness();
@@ -40,10 +34,8 @@ export default class DarkSlidePlugin extends Plugin {
 	}
 
 	onunload() {
-		// Remove the style element
-		if (this.styleEl) {
-			this.styleEl.remove();
-		}
+		// Reset CSS variable on unload
+		document.body.style.removeProperty('--darkslide-overlay');
 	}
 
 	createStatusBarSlider() {
@@ -54,18 +46,12 @@ export default class DarkSlidePlugin extends Plugin {
 		const container = this.statusBarItem.createEl('div', {
 			cls: 'brightness-slider-container'
 		});
-		container.style.display = 'flex';
-		container.style.alignItems = 'center';
-		container.style.gap = '8px';
-		container.style.padding = '0 4px';
 		
 		// Add sun icon
 		const icon = container.createEl('span', {
 			text: '☀️',
 			cls: 'brightness-icon'
 		});
-		icon.style.fontSize = '14px';
-		icon.style.cursor = 'default';
 		
 		// Create slider
 		const slider = container.createEl('input', {
@@ -76,19 +62,12 @@ export default class DarkSlidePlugin extends Plugin {
 		slider.max = '100';
 		slider.step = '5';
 		slider.value = this.settings.brightnessLevel.toString();
-		slider.style.width = '100px';
-		slider.style.margin = '0';
-		slider.style.cursor = 'pointer';
 		
 		// Add value display
 		const valueDisplay = container.createEl('span', {
 			text: `${this.settings.brightnessLevel}`,
 			cls: 'brightness-value'
 		});
-		valueDisplay.style.minWidth = '30px';
-		valueDisplay.style.fontSize = '11px';
-		valueDisplay.style.textAlign = 'right';
-		valueDisplay.style.opacity = '0.7';
 		
 		// Handle slider change
 		slider.addEventListener('input', async (e) => {
@@ -121,8 +100,6 @@ export default class DarkSlidePlugin extends Plugin {
 	applyBrightness() {
 		const brightness = this.settings.brightnessLevel;
 		
-		let css = '';
-		
 		if (brightness !== 0) {
 			// Calculate overlay color and opacity
 			let overlayColor: string;
@@ -138,95 +115,12 @@ export default class DarkSlidePlugin extends Plugin {
 				overlayOpacity = brightness / 100;
 			}
 			
-			// Store overlay as CSS variable for reuse
-			css = `
-				body {
-					--brightness-overlay: rgba(${overlayColor}, ${overlayOpacity});
-				}
-				
-				/* Override common custom CSS variables used by plugins and themes */
-				* {
-					--nn-theme-list-bg: linear-gradient(var(--brightness-overlay), var(--brightness-overlay)), var(--background-secondary) !important;
-				}
-				
-				/* Apply gradient overlay to main content areas */
-				.workspace,
-				.workspace-leaf,
-				.workspace-leaf-content,
-				.view-content,
-				.markdown-source-view.mod-cm6 .cm-scroller,
-				.markdown-preview-view,
-				.markdown-reading-view,
-				.cm-editor,
-				.status-bar,
-				.titlebar,
-				.menu,
-				.prompt {
-					background: linear-gradient(var(--brightness-overlay), var(--brightness-overlay)), var(--background-primary) !important;
-				}
-				
-				/* Modal content (not backdrop) */
-				.modal {
-					background: linear-gradient(var(--brightness-overlay), var(--brightness-overlay)), var(--background-primary) !important;
-				}
-				
-				/* Preserve modal backdrop transparency - DO NOT apply overlay */
-				.modal-bg {
-					background: rgba(0, 0, 0, 0.4) !important;
-				}
-				
-				/* Tab headers and top bars */
-				.workspace-tabs.mod-top,
-				.workspace-tab-header-container,
-				.workspace-tab-header-container-inner,
-				.workspace-tab-header:not(.is-active) {
-					background: linear-gradient(var(--brightness-overlay), var(--brightness-overlay)), var(--background-secondary) !important;
-				}
-				
-				/* Active tab */
-				.workspace-tab-header.is-active {
-					background: linear-gradient(var(--brightness-overlay), var(--brightness-overlay)), var(--background-primary) !important;
-				}
-				
-				/* Side panels and ribbons */
-				.workspace-ribbon.mod-left,
-				.workspace-ribbon.mod-right,
-				.workspace-ribbon,
-				.workspace-split.mod-left-split,
-				.workspace-split.mod-right-split,
-				.workspace-split.mod-sidedock,
-				.workspace-sidedock-vault-profile,
-				.workspace-tabs.mod-top-left-space,
-				.workspace-tabs.mod-top-right-space,
-				.sidebar-toggle-button,
-				.mod-left-split .workspace-tabs,
-				.mod-right-split .workspace-tabs,
-				.mod-left-split .workspace-tab-header-container,
-				.mod-right-split .workspace-tab-header-container,
-				.mod-left-split .workspace-tab-header,
-				.mod-right-split .workspace-tab-header,
-				.nav-files-container,
-				.nav-folder-children,
-				.nav-header,
-				.nav-buttons-container,
-				.search-result-container,
-				.tree-item-self,
-				.nav-folder-title,
-				.nav-file-title {
-					background: linear-gradient(var(--brightness-overlay), var(--brightness-overlay)), var(--background-secondary) !important;
-				}
-				
-				/* View headers (title area above content) */
-				.view-header,
-				.view-header-title-container {
-					background: linear-gradient(var(--brightness-overlay), var(--brightness-overlay)), var(--background-primary) !important;
-				}
-			`;
+			// Update CSS variable - styles.css will use this
+			document.body.style.setProperty('--darkslide-overlay', `rgba(${overlayColor}, ${overlayOpacity})`);
 		} else {
-			css = '';
+			// Reset to transparent
+			document.body.style.setProperty('--darkslide-overlay', 'rgba(0, 0, 0, 0)');
 		}
-
-		this.styleEl.textContent = css;
 	}
 }
 
@@ -255,10 +149,6 @@ class BrightnessSettingTab extends PluginSettingTab {
 			text: `Current brightness: ${this.plugin.settings.brightnessLevel}%`,
 			cls: 'brightness-value-display'
 		});
-		valueDisplay.style.textAlign = 'center';
-		valueDisplay.style.marginBottom = '10px';
-		valueDisplay.style.fontSize = '1.2em';
-		valueDisplay.style.fontWeight = 'bold';
 
 		new Setting(containerEl)
 			.setName('Brightness Level')
