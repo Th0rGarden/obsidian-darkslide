@@ -83,6 +83,8 @@ You may use this plugin freely for personal purposes, but you may not modify, co
 ✅ **You can**: Use the plugin in your Obsidian vault
 ❌ **You cannot**: Modify, copy, fork, or use the code in other projects
 
+💼 **Need commercial licensing?** Contact: th0rgardentools@proton.me
+
 See [LICENSE.md](LICENSE.md) for complete terms.
 
 ## 🤝 Support

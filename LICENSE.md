@@ -32,11 +32,20 @@ Violation of these terms, including unauthorized copying, modification, or distr
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
 
+## Commercial Licensing
+
+Interested in using this software for commercial purposes or need different terms? 
+
+**Contact**: th0rgardentools@proton.me
+
+Commercial licenses and custom arrangements are available upon request.
+
 ## Contact
 
-For licensing inquiries or permission requests:
-- GitHub: https://github.com/Th0rGarden
+For licensing inquiries, permission requests, or general questions:
+- **Email**: th0rgardentools@proton.me
+- **GitHub**: https://github.com/Th0rGarden
 
 ---
 
-**TL;DR**: Use it freely for yourself, but don't copy, modify, or redistribute it.
+**TL;DR**: Use it freely for yourself, but don't copy, modify, or redistribute it. Need commercial use? Email th0rgardentools@proton.me
