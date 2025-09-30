@@ -76,11 +76,14 @@ npm run dev
 
 ## 📜 License
 
-**Proprietary - All Rights Reserved**
+**Custom License - Personal Use Only**
 
-This plugin is proprietary software. The source code is provided for viewing and reference only. You may not use, copy, modify, or distribute this software without explicit permission from the author.
+You may use this plugin freely for personal purposes, but you may not modify, copy, fork, or redistribute it. The source code is available for transparency and education, but all rights are reserved.
 
-See [LICENSE.md](LICENSE.md) for full terms.
+✅ **You can**: Use the plugin in your Obsidian vault
+❌ **You cannot**: Modify, copy, fork, or use the code in other projects
+
+See [LICENSE.md](LICENSE.md) for complete terms.
 
 ## 🤝 Support
 

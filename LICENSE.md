@@ -1,34 +1,42 @@
-# Proprietary License
+# Custom License - Personal Use Only
 
 Copyright (c) 2025 ThorGarden
 
-**All Rights Reserved**
+## Permissions
 
-This software and associated documentation files (the "Software") are proprietary and confidential.
+You **MAY**:
+- ✅ Download and use this software for personal, non-commercial purposes
+- ✅ Install and run the plugin in your Obsidian vault
+- ✅ View the source code to understand how it works
 
-## Terms
+## Restrictions
 
-1. **No Permission Granted**: No license, permission, or right of any kind is granted to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
+You **MAY NOT**:
+- ❌ Modify, adapt, or create derivative works based on this software
+- ❌ Fork, copy, or reproduce this software in any form
+- ❌ Distribute, share, or republish this software or any modified versions
+- ❌ Use this software for any commercial purposes
+- ❌ Remove or alter any copyright notices
+- ❌ Reverse engineer or decompile the software (beyond what's already visible in source)
+- ❌ Use any portion of the code in other projects
 
-2. **Viewing Only**: The source code is made available for viewing and reference purposes only. You may view the code to understand how it works, but you may not use it in any way.
+## Source Code Availability
 
-3. **No Distribution**: You may not distribute, share, or make available this Software or any derivative works in any form.
-
-4. **No Commercial Use**: The Software may not be used for any commercial purposes whatsoever.
-
-5. **No Modification**: You may not modify, adapt, or create derivative works based on this Software.
-
-6. **Personal Use Only**: If explicitly granted permission by the author, use is limited to personal, non-commercial use only.
+The source code is made available for transparency and educational purposes only. Making the code visible does **not** grant any rights to modify, copy, or redistribute it.
 
 ## Enforcement
 
-Unauthorized use, reproduction, or distribution of this Software, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under the law.
+Violation of these terms, including unauthorized copying, modification, or distribution of this software or any portion of it, may result in legal action.
+
+## No Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
 
 ## Contact
 
-For licensing inquiries or permission requests, contact:
-- GitHub: https://github.com/ThorGarden
+For licensing inquiries or permission requests:
+- GitHub: https://github.com/Th0rGarden
 
 ---
 
-**THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.**
+**TL;DR**: Use it freely for yourself, but don't copy, modify, or redistribute it.
