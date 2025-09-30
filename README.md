@@ -34,41 +34,28 @@
 
 ## 📥 Installation
 
-### Manual Installation
+> **Note:** DarkSlide is currently pending approval for the Obsidian Community Plugins marketplace. Until then, please use manual installation.
+
+### Manual Installation (Current Method)
 
 1. Download `main.js` and `manifest.json` from the [latest release](https://github.com/Th0rGarden/obsidian-darkslide/releases)
-2. Create a folder called `darkslide` in your vault's `.obsidian/plugins/` directory
-3. Place both files in the `darkslide` folder
-4. Reload Obsidian
-5. Enable DarkSlide in Settings → Community Plugins
+2. Navigate to your vault's plugins folder:
+   - **Windows**: `C:\path\to\your\vault\.obsidian\plugins\`
+   - **macOS/Linux**: `/path/to/your/vault/.obsidian/plugins/`
+3. Create a new folder called `darkslide`
+4. Place both downloaded files (`main.js` and `manifest.json`) inside the `darkslide` folder
+5. Restart Obsidian or reload community plugins
+6. Go to Settings → Community Plugins
+7. Enable "DarkSlide"
 
-### Development Setup
+**Having trouble finding the plugins folder?**
+- In Obsidian, open Settings → About
+- Under "Advanced" you'll see links to your vault folder
+- Navigate to `.obsidian/plugins/` from there
 
-1. Clone this repo into your vault's `.obsidian/plugins/` directory:
-   ```bash
-   cd /path/to/your/vault/.obsidian/plugins/
-   git clone https://github.com/Th0rGarden/obsidian-darkslide.git darkslide
-   cd darkslide
-   ```
+### Community Plugins (Coming Soon)
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Build the plugin:
-   ```bash
-   npm run build
-   ```
-
-4. Reload Obsidian and enable the plugin
-
-### Development Mode
-
-```bash
-# Watch for changes and auto-rebuild
-npm run dev
-```
+Once approved, you'll be able to install DarkSlide directly from Settings → Community Plugins → Browse
 
 ## 💡 Tips
 
