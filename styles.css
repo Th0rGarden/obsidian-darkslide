@@ -1,0 +1,118 @@
+/* DarkSlide - Background Brightness Control */
+
+/* CSS Variables for brightness overlay */
+body {
+	--darkslide-overlay: rgba(0, 0, 0, 0);
+}
+
+/* Status bar slider styles */
+.brightness-slider-container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 0 4px;
+}
+
+.brightness-icon {
+	font-size: 14px;
+	cursor: default;
+}
+
+.brightness-slider {
+	width: 100px;
+	margin: 0;
+	cursor: pointer;
+}
+
+.brightness-value {
+	min-width: 30px;
+	font-size: 11px;
+	text-align: right;
+	opacity: 0.7;
+}
+
+/* Settings page styles */
+.brightness-value-display {
+	text-align: center;
+	margin-bottom: 10px;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+/* Apply gradient overlay to main content areas */
+.workspace,
+.workspace-leaf,
+.workspace-leaf-content,
+.view-content,
+.markdown-source-view.mod-cm6 .cm-scroller,
+.markdown-preview-view,
+.markdown-reading-view,
+.cm-editor,
+.status-bar,
+.titlebar,
+.menu,
+.prompt {
+	background: linear-gradient(var(--darkslide-overlay), var(--darkslide-overlay)), var(--background-primary) !important;
+}
+
+/* Modal content (not backdrop) */
+.modal {
+	background: linear-gradient(var(--darkslide-overlay), var(--darkslide-overlay)), var(--background-primary) !important;
+}
+
+/* Preserve modal backdrop transparency - DO NOT apply overlay */
+.modal-bg {
+	background: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Tab headers and top bars */
+.workspace-tabs.mod-top,
+.workspace-tab-header-container,
+.workspace-tab-header-container-inner,
+.workspace-tab-header:not(.is-active) {
+	background: linear-gradient(var(--darkslide-overlay), var(--darkslide-overlay)), var(--background-secondary) !important;
+}
+
+/* Active tab */
+.workspace-tab-header.is-active {
+	background: linear-gradient(var(--darkslide-overlay), var(--darkslide-overlay)), var(--background-primary) !important;
+}
+
+/* Side panels and ribbons */
+.workspace-ribbon.mod-left,
+.workspace-ribbon.mod-right,
+.workspace-ribbon,
+.workspace-split.mod-left-split,
+.workspace-split.mod-right-split,
+.workspace-split.mod-sidedock,
+.workspace-sidedock-vault-profile,
+.workspace-tabs.mod-top-left-space,
+.workspace-tabs.mod-top-right-space,
+.sidebar-toggle-button,
+.mod-left-split .workspace-tabs,
+.mod-right-split .workspace-tabs,
+.mod-left-split .workspace-tab-header-container,
+.mod-right-split .workspace-tab-header-container,
+.mod-left-split .workspace-tab-header,
+.mod-right-split .workspace-tab-header,
+.nav-files-container,
+.nav-folder-children,
+.nav-header,
+.nav-buttons-container,
+.search-result-container,
+.tree-item-self,
+.nav-folder-title,
+.nav-file-title {
+	background: linear-gradient(var(--darkslide-overlay), var(--darkslide-overlay)), var(--background-secondary) !important;
+}
+
+/* View headers (title area above content) */
+.view-header,
+.view-header-title-container {
+	background: linear-gradient(var(--darkslide-overlay), var(--darkslide-overlay)), var(--background-primary) !important;
+}
+
+/* Override common custom CSS variables used by plugins and themes */
+* {
+	--nn-theme-list-bg: linear-gradient(var(--darkslide-overlay), var(--darkslide-overlay)), var(--background-secondary) !important;
+}
