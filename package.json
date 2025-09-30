@@ -1,6 +1,6 @@
 {
   "name": "obsidian-darkslide",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "DarkSlide - Adjust background brightness across any Obsidian theme with a status bar slider",
   "main": "main.js",
   "scripts": {
