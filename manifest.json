@@ -1,0 +1,10 @@
+{
+  "id": "darkslide",
+  "name": "DarkSlide",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Slide into darkness (or light). Adjust background brightness across any theme with a status bar slider.",
+  "author": "ThorGarden",
+  "authorUrl": "https://github.com/ThorGarden",
+  "isDesktopOnly": false
+}
