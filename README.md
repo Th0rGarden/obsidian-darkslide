@@ -2,8 +2,12 @@
 
 **Slide into darkness (or light).** An Obsidian plugin that lets you adjust background brightness across any theme with a status bar slider.
 
+<p align="center">
+  <img src="screenshot.png" width="300" alt="DarkSlide in action">
+</p>
+
 ![License](https://img.shields.io/badge/license-Proprietary-red)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.0.1-blue)
 
 ## ✨ Features
 

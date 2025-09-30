@@ -160,11 +160,19 @@ export default class DarkSlidePlugin extends Plugin {
 				.cm-editor,
 				.status-bar,
 				.titlebar,
-				.modal,
-				.modal-container,
 				.menu,
 				.prompt {
 					background: linear-gradient(var(--brightness-overlay), var(--brightness-overlay)), var(--background-primary) !important;
+				}
+				
+				/* Modal content (not backdrop) */
+				.modal {
+					background: linear-gradient(var(--brightness-overlay), var(--brightness-overlay)), var(--background-primary) !important;
+				}
+				
+				/* Preserve modal backdrop transparency - DO NOT apply overlay */
+				.modal-bg {
+					background: rgba(0, 0, 0, 0.4) !important;
 				}
 				
 				/* Tab headers and top bars */
