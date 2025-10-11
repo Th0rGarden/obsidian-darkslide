@@ -36,12 +36,22 @@ That's all there is to it. Your settings save automatically.
 
 ## Installation
 
-DarkSlide is pending approval for the Obsidian Community Plugins marketplace. For now, install it manually:
+DarkSlide is pending approval for the Obsidian Community Plugins marketplace.
 
-1. Download `main.js` and `manifest.json` from the [latest release](https://github.com/Th0rGarden/obsidian-darkslide/releases)
+### Install with BRAT (recommended)
+
+1. Install the [BRAT plugin](https://github.com/TfTHacker/obsidian42-brat)
+2. Open command palette (Ctrl/Cmd + P)
+3. Run "BRAT: Add a beta plugin for testing"
+4. Enter: `Th0rGarden/obsidian-darkslide`
+5. Enable DarkSlide in Settings → Community Plugins
+
+### Manual installation
+
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/Th0rGarden/obsidian-darkslide/releases)
 2. Go to your vault's `.obsidian/plugins/` folder
 3. Create a folder called `darkslide`
-4. Drop both files in there
+4. Drop all three files in there
 5. Restart Obsidian
 6. Enable the plugin in Settings → Community Plugins
 
