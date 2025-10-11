@@ -63,7 +63,6 @@ Start with small adjustments (±10 to ±20) and go from there. The slider goes f
 
 - Added a reset button to the status bar slider
 - Each theme now remembers its own brightness
-- Brightness adjustments now match your theme's colors instead of using generic black/white overlays
 - Automatically detects when you switch themes
 
 ## A quick note
