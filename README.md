@@ -52,7 +52,7 @@ Can't find the plugins folder? In Obsidian, go to Settings → About and look un
 Honestly, I made this because I kept finding themes I liked, but they were always just a bit too dark or too bright for different times of day. Maybe you:
 
 - Love a theme but it's too dark for daytime work
-- Have a light theme that's blinding at night
+- Have a dark theme that's not quite dark enough
 - Want to go extra dark for focus sessions without switching themes
 - Work in different lighting throughout the day
 - Just like tweaking things until they feel right
