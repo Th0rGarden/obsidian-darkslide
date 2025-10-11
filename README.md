@@ -34,8 +34,6 @@ Look at the bottom-right corner of Obsidian. You'll see a sun icon (☀️) with
 
 That's all there is to it. Your settings save automatically.
 
-If you switch between multiple themes throughout the day, each one will remember its own brightness. So you can have your light theme at +30 and your dark theme at -50, and DarkSlide will automatically switch between them when you change themes.
-
 ## Installation
 
 DarkSlide is pending approval for the Obsidian Community Plugins marketplace. For now, install it manually:
