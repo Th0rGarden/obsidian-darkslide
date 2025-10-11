@@ -20,3 +20,6 @@ Thumbs.db
 # Deployment files (not for marketplace)
 deploy.ps1
 CHANGELOG-*.md
+
+# Lock files
+package-lock.json
