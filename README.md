@@ -1,84 +1,83 @@
-# DarkSlide for Obsidian
+# DarkSlide
 
-**Slide into darkness (or light).** An Obsidian plugin that lets you adjust background brightness across any theme with a status bar slider.
+**Dial in the perfect brightness for any Obsidian theme.**
+
+Ever find a theme you love, but it's just a bit too dark? Or maybe it's too bright when you're working late at night? DarkSlide adds a simple slider to your status bar that lets you adjust how dark or light your theme looks—without actually switching themes.
 
 <p align="center">
   <img src="screenshot.png" width="300" alt="DarkSlide in action">
 </p>
 
 ![License](https://img.shields.io/badge/license-Proprietary-red)
-![Version](https://img.shields.io/badge/version-1.0.1-blue)
+![Version](https://img.shields.io/badge/version-1.1.0-blue)
 
-## ✨ Features
+> **Important note:** This isn't a theme switcher. It adjusts the brightness of whatever theme you're already using. Think of it like a brightness dial for your current theme.
 
-- 🎚️ **Status Bar Slider**: Always-accessible brightness control right in your status bar
-- 🌓 **Live Adjustment**: Watch backgrounds darken or brighten as you drag the slider (-100 to +100)
-- 🎨 **Universal Theme Support**: Works with any Obsidian theme without modifying the theme itself
-- ⚡ **Instant Feedback**: Real-time preview as you adjust
-- 💾 **Auto-Save**: Settings persist across sessions
-- 🎯 **Comprehensive Coverage**: Affects editor, sidebars, ribbons, tabs, modals, and more
-- 🔌 **Plugin-Aware**: Even adjusts backgrounds from other plugins using custom CSS variables
+## What it does
 
-## 🚀 Usage
+DarkSlide adds a slider to your status bar (bottom right). Drag it left to make things darker, drag it right to make things brighter. That's it.
 
-**Status Bar Slider** (easiest!):
-1. Look at the bottom-right corner of Obsidian
-2. Find the ☀️ sun icon with a slider next to it
-3. Drag the slider left (darker) or right (brighter)
-4. That's it! Changes apply instantly.
+The plugin is smart about it though:
+- Each theme remembers its own brightness setting
+- Changes happen instantly as you move the slider
+- There's a reset button when you want to go back to normal
 
-**Settings Panel**:
-1. Click the ☀️ sun icon in the ribbon, or go to Settings → DarkSlide
-2. Use the slider to adjust brightness
-3. Hit the "Reset" button to return to normal (0)
+It works everywhere: the editor, sidebars, tabs, modals, even plugin panels. And it works with any theme without modifying the theme files themselves.
 
-## 📥 Installation
+## How to use it
 
-> **Note:** DarkSlide is currently pending approval for the Obsidian Community Plugins marketplace. Until then, please use manual installation.
+Look at the bottom-right corner of Obsidian. You'll see a sun icon (☀️) with a slider next to it.
 
-### Manual Installation (Current Method)
+**Drag left** = darker  
+**Drag right** = brighter  
+**Click the reset button** (↺) = back to normal
+
+That's all there is to it. Your settings save automatically.
+
+If you switch between multiple themes throughout the day, each one will remember its own brightness. So you can have your light theme at +30 and your dark theme at -50, and DarkSlide will automatically switch between them when you change themes.
+
+## Installation
+
+DarkSlide is pending approval for the Obsidian Community Plugins marketplace. For now, install it manually:
 
 1. Download `main.js` and `manifest.json` from the [latest release](https://github.com/Th0rGarden/obsidian-darkslide/releases)
-2. Navigate to your vault's plugins folder:
-   - **Windows**: `C:\path\to\your\vault\.obsidian\plugins\`
-   - **macOS/Linux**: `/path/to/your/vault/.obsidian/plugins/`
-3. Create a new folder called `darkslide`
-4. Place both downloaded files (`main.js` and `manifest.json`) inside the `darkslide` folder
-5. Restart Obsidian or reload community plugins
-6. Go to Settings → Community Plugins
-7. Enable "DarkSlide"
+2. Go to your vault's `.obsidian/plugins/` folder
+3. Create a folder called `darkslide`
+4. Drop both files in there
+5. Restart Obsidian
+6. Enable the plugin in Settings → Community Plugins
 
-**Having trouble finding the plugins folder?**
-- In Obsidian, open Settings → About
-- Under "Advanced" you'll see links to your vault folder
-- Navigate to `.obsidian/plugins/` from there
+Can't find the plugins folder? In Obsidian, go to Settings → About and look under "Advanced" for links to your vault folder.
 
-### Community Plugins (Coming Soon)
+## When you might use this
 
-Once approved, you'll be able to install DarkSlide directly from Settings → Community Plugins → Browse
+Honestly, I made this because I kept finding themes I liked, but they were always just a bit too dark or too bright for different times of day. Maybe you:
 
-## 💡 Tips
+- Love a theme but it's too dark for daytime work
+- Have a light theme that's blinding at night
+- Want to go extra dark for focus sessions without switching themes
+- Work in different lighting throughout the day
+- Just like tweaking things until they feel right
 
-- **Make it darker**: Try values between -30 to -70 for a deeper, more focused dark mode
-- **Make it brighter**: Values between +20 to +50 can help if your theme is too dim
-- **Reset anytime**: Click the "Reset" button in settings to return to 0 (theme default)
-- **Auto-save**: Your preference saves automatically when you release the slider
-- **Per-vault**: Each vault remembers its own brightness setting
+Start with small adjustments (±10 to ±20) and go from there. The slider goes from -100 to +100, but you usually don't need to go that extreme.
 
-## 📜 License
+## What's new in v1.1
 
-**Custom License - Personal Use Only**
+- Added a reset button to the status bar slider
+- Each theme now remembers its own brightness
+- Brightness adjustments now match your theme's colors instead of using generic black/white overlays
+- Automatically detects when you switch themes
 
-You may use this plugin freely for personal purposes, but you may not modify, copy, fork, or redistribute it. The source code is available for transparency and education, but all rights are reserved.
+## A quick note
 
-💼 **Need commercial licensing?** Contact: th0rgardentools@proton.me
+This plugin works by applying a color overlay to backgrounds. It works well with most themes, but some themes with very specific styling might not respond perfectly to the adjustment. If you find one that doesn't work right, let me know.
 
-See [LICENSE.md](LICENSE.md) for complete terms.
+## License
 
-## 🤝 Support
+This is free for personal use, but the code is proprietary. You can use it, but please don't redistribute or modify it. See [LICENSE.md](LICENSE.md) for the full terms.
 
-Found a bug or have a feature request? Open an issue on GitHub!
+Need a commercial license? Email th0rgardentools@proton.me
 
-## ⚠️ Disclaimer
+## Bugs and requests
 
-This plugin modifies CSS to adjust background brightness. While it works with most themes and plugins, some custom themes or plugins with very specific styling may not be fully affected. The plugin aims for comprehensive coverage but cannot guarantee 100% compatibility with all possible theme configurations.
+Found something broken or have an idea? [Open an issue](https://github.com/Th0rGarden/obsidian-darkslide/issues).

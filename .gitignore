@@ -16,3 +16,7 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Deployment files (not for marketplace)
+deploy.ps1
+CHANGELOG-*.md

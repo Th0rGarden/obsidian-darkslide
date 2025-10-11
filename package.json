@@ -1,11 +1,12 @@
 {
   "name": "obsidian-darkslide",
-  "version": "1.0.1",
-  "description": "DarkSlide - Adjust background brightness across any Obsidian theme with a status bar slider",
+  "version": "1.1.0",
+  "description": "DarkSlide - Dial in the perfect brightness for any Obsidian theme",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "deploy": "npm run build && pwsh ./deploy.ps1",
     "version": "node version-bump.mjs && git add manifest.json versions.json"
   },
   "keywords": [
