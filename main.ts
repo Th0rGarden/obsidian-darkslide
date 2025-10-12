@@ -1,7 +1,7 @@
 import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
 interface BrightnessSettings {
-	brightnessLevel: number; // -100 to 100, where 0 is no change (legacy)
+	brightnessLevel: number; // -200 to 100, where 0 is no change (legacy)
 	perThemeBrightness: Record<string, number>; // Per-theme brightness settings
 }
 
@@ -67,7 +67,7 @@ export default class DarkSlidePlugin extends Plugin {
 			type: 'range',
 			cls: 'brightness-slider'
 		});
-		slider.min = '-100';
+		slider.min = '-200';
 		slider.max = '100';
 		slider.step = '5';
 		slider.value = this.getBrightnessForTheme(this.currentTheme).toString();
@@ -193,14 +193,17 @@ export default class DarkSlidePlugin extends Plugin {
 				
 				if (brightness < 0) {
 					// Darker: Use a darkened version of the theme color
-					// Blend toward darker version of same hue
+					// For extreme darkening (-100 to -200), blend more towards pure black
+					const absValue = Math.abs(brightness);
+					const darkFactor = absValue <= 100 ? 0.3 : Math.max(0, 0.3 - (absValue - 100) * 0.003);
 					const darkerRgb = {
-						r: Math.max(0, Math.floor(rgb.r * 0.3)),
-						g: Math.max(0, Math.floor(rgb.g * 0.3)),
-						b: Math.max(0, Math.floor(rgb.b * 0.3))
+						r: Math.max(0, Math.floor(rgb.r * darkFactor)),
+						g: Math.max(0, Math.floor(rgb.g * darkFactor)),
+						b: Math.max(0, Math.floor(rgb.b * darkFactor))
 					};
 					overlayColor = `${darkerRgb.r}, ${darkerRgb.g}, ${darkerRgb.b}`;
-					overlayOpacity = Math.abs(brightness) / 100;
+					// Increase opacity more aggressively for extreme values
+					overlayOpacity = absValue <= 100 ? absValue / 100 : Math.min(1, 1 + (absValue - 100) / 200);
 				} else {
 					// Brighter: Use a lightened version of the theme color
 					// Blend toward lighter version of same hue
@@ -218,7 +221,8 @@ export default class DarkSlidePlugin extends Plugin {
 			} else {
 				// Fallback to black/white if color parsing fails
 				const overlayColor = brightness < 0 ? '0, 0, 0' : '255, 255, 255';
-				const overlayOpacity = Math.abs(brightness) / 100;
+				const absValue = Math.abs(brightness);
+				const overlayOpacity = absValue <= 100 ? absValue / 100 : Math.min(1, 1 + (absValue - 100) / 200);
 				document.body.style.setProperty('--darkslide-overlay', `rgba(${overlayColor}, ${overlayOpacity})`);
 			}
 		} else {
@@ -275,10 +279,10 @@ class BrightnessSettingTab extends PluginSettingTab {
 
 		containerEl.createEl('h2', {text: 'DarkSlide'});
 
-		containerEl.createEl('p', {
-			text: 'Adjust the brightness of background colors in your current theme. Negative values make it darker, positive values make it brighter.',
-			cls: 'setting-item-description'
-		});
+	containerEl.createEl('p', {
+		text: 'Adjust the brightness of background colors in your current theme. Negative values make it darker (down to -200 for pure black), positive values make it brighter.',
+		cls: 'setting-item-description'
+	});
 
 		// Show current theme
 		containerEl.createEl('p', {
@@ -300,9 +304,9 @@ class BrightnessSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Brightness Level')
-			.setDesc('Adjust background brightness for current theme (-100 = darkest, 0 = normal, +100 = brightest)')
+			.setDesc('Adjust background brightness for current theme (-200 = pure black, 0 = normal, +100 = brightest)')
 			.addSlider(slider => slider
-				.setLimits(-100, 100, 5)
+				.setLimits(-200, 100, 5)
 				.setValue(currentBrightness)
 				.setDynamicTooltip()
 				.onChange(async (value) => {
@@ -328,7 +332,7 @@ class BrightnessSettingTab extends PluginSettingTab {
 		// Add some helpful tips
 		containerEl.createEl('h3', {text: 'Tips'});
 		const tipsList = containerEl.createEl('ul');
-		tipsList.createEl('li', {text: 'Use negative values (-50 to -100) to make dark themes darker'});
+	tipsList.createEl('li', {text: 'Use negative values (-50 to -200) to make dark themes darker (extreme values approach pure black)'});
 		tipsList.createEl('li', {text: 'Use positive values (+20 to +50) to brighten overly dark themes'});
 		tipsList.createEl('li', {text: 'Changes are applied immediately as you move the slider'});
 		tipsList.createEl('li', {text: 'Settings are saved per vault'});
