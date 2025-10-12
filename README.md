@@ -33,7 +33,7 @@ Look at the bottom-right corner of Obsidian. You'll see a sun icon (☀️) with
 **Drag right** = brighter  
 **Click the reset button** (↺) = back to normal
 
-That's all there is to it. Your settings save automatically.
+That's all there is to it. Your setting for each theme saves automatically.
 
 ## Installation
 
