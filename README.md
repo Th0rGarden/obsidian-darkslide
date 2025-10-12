@@ -17,7 +17,6 @@ Ever find a theme you love, but it's just a bit too dark? Or maybe it's too brig
 
 DarkSlide adds a slider to your status bar (bottom right). Drag it left to make things darker, drag it right to make things brighter. That's it.
 
-The plugin is smart about it though:
 - Each theme remembers its own brightness setting
 - Changes happen instantly as you move the slider
 - There's a reset button when you want to go back to normal
