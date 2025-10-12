@@ -35,6 +35,16 @@ Look at the bottom-right corner of Obsidian. You'll see a sun icon (☀️) with
 
 That's all there is to it. Your setting for each theme saves automatically.
 
+## When you might use this
+
+Honestly, I made this because I kept finding themes I liked, but they were always just a bit too dark or too bright for different times of day. Maybe you:
+
+- Love a theme but it's too dark for daytime work
+- Have a dark theme that's not quite dark enough
+- Want to go extra dark for focus sessions without switching themes
+- Work in different lighting throughout the day
+- Just like tweaking things until they feel right
+
 ## Installation
 
 DarkSlide is pending approval for the Obsidian Community Plugins marketplace.
@@ -58,17 +68,6 @@ DarkSlide is pending approval for the Obsidian Community Plugins marketplace.
 
 Can't find the plugins folder? In Obsidian, go to Settings → About and look under "Advanced" for links to your vault folder.
 
-## When you might use this
-
-Honestly, I made this because I kept finding themes I liked, but they were always just a bit too dark or too bright for different times of day. Maybe you:
-
-- Love a theme but it's too dark for daytime work
-- Have a dark theme that's not quite dark enough
-- Want to go extra dark for focus sessions without switching themes
-- Work in different lighting throughout the day
-- Just like tweaking things until they feel right
-
-Start with small adjustments (±10 to ±20) and go from there. The slider goes from -100 to +100, but you usually don't need to go that extreme.
 
 ## What's new in v1.1
 
