@@ -3,17 +3,24 @@ import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
 interface BrightnessSettings {
 	brightnessLevel: number; // -200 to 100, where 0 is no change (legacy)
 	perThemeBrightness: Record<string, number>; // Per-theme brightness settings
+	contrastLevel: number; // 0 to 200, where 100 is no change
+	perThemeContrast: Record<string, number>; // Per-theme contrast settings
+	showStatusBar: boolean; // Toggle status bar visibility
 }
 
 const DEFAULT_SETTINGS: BrightnessSettings = {
 	brightnessLevel: 0,
-	perThemeBrightness: {}
+	perThemeBrightness: {},
+	contrastLevel: 100,
+	perThemeContrast: {},
+	showStatusBar: true
 }
 
 export default class DarkSlidePlugin extends Plugin {
 	settings: BrightnessSettings;
 	statusBarItem: HTMLElement;
 	currentTheme: string = '';
+	sliderMode: 'brightness' | 'contrast' = 'brightness';
 
 	async onload() {
 		await this.loadSettings();
@@ -21,11 +28,14 @@ export default class DarkSlidePlugin extends Plugin {
 		// Get current theme
 		this.currentTheme = this.getCurrentTheme();
 
-		// Apply initial brightness for current theme
+		// Apply initial brightness and contrast for current theme
 		this.applyBrightness();
+		this.applyContrast();
 
-		// Add status bar slider
-		this.createStatusBarSlider();
+		// Add status bar slider if enabled
+		if (this.settings.showStatusBar) {
+			this.createStatusBarSlider();
+		}
 
 		// Watch for theme changes
 		this.setupThemeWatcher();
@@ -34,7 +44,7 @@ export default class DarkSlidePlugin extends Plugin {
 		this.addSettingTab(new BrightnessSettingTab(this.app, this));
 
 		// Add ribbon icon for quick access
-		this.addRibbonIcon('sun', 'Adjust Background Brightness', () => {
+		this.addRibbonIcon('sun', 'Adjust background brightness', () => {
 			// @ts-ignore
 			this.app.setting.open();
 			// @ts-ignore
@@ -43,8 +53,22 @@ export default class DarkSlidePlugin extends Plugin {
 	}
 
 	onunload() {
-		// Reset CSS variable on unload
+		// Reset CSS variables on unload
 		document.body.style.removeProperty('--darkslide-overlay');
+		document.body.style.removeProperty('filter');
+		// Remove status bar if it exists
+		if (this.statusBarItem) {
+			this.statusBarItem.remove();
+		}
+	}
+
+	toggleStatusBar(show: boolean) {
+		if (show && !this.statusBarItem) {
+			this.createStatusBarSlider();
+		} else if (!show && this.statusBarItem) {
+			this.statusBarItem.remove();
+			this.statusBarItem = null as any;
+		}
 	}
 
 	createStatusBarSlider() {
@@ -56,8 +80,8 @@ export default class DarkSlidePlugin extends Plugin {
 			cls: 'brightness-slider-container'
 		});
 		
-		// Add sun icon
-		const icon = container.createEl('span', {
+		// Add mode icon (changes based on mode)
+		const modeIcon = container.createEl('span', {
 			text: '☀️',
 			cls: 'brightness-icon'
 		});
@@ -83,42 +107,104 @@ export default class DarkSlidePlugin extends Plugin {
 			text: '↺',
 			cls: 'brightness-reset-btn'
 		});
-		resetBtn.title = 'Reset to default (0)';
+		resetBtn.title = 'Reset to default';
+		
+		// Add toggle button to switch between brightness and contrast
+		const toggleBtn = container.createEl('button', {
+			text: '◐',
+			cls: 'brightness-toggle-btn'
+		});
+		toggleBtn.title = 'Switch to contrast control';
 		
 		// Handle slider change
-		slider.addEventListener('input', async (e) => {
+		slider.addEventListener('input', (e) => {
 			const value = parseInt((e.target as HTMLInputElement).value);
-			this.setBrightnessForTheme(this.currentTheme, value);
-			valueDisplay.setText(`${value}`);
-			this.applyBrightness();
+			if (this.sliderMode === 'brightness') {
+				this.setBrightnessForTheme(this.currentTheme, value);
+				valueDisplay.setText(`${value}`);
+				this.applyBrightness();
+			} else {
+				this.setContrastForTheme(this.currentTheme, value);
+				valueDisplay.setText(`${value}%`);
+				this.applyContrast();
+			}
 		});
 		
 		// Save on mouse up
-		slider.addEventListener('mouseup', async () => {
-			await this.saveSettings();
+		slider.addEventListener('mouseup', () => {
+			void this.saveSettings();
 		});
 		
 		// Also save on touch end for mobile
-		slider.addEventListener('touchend', async () => {
-			await this.saveSettings();
+		slider.addEventListener('touchend', () => {
+			void this.saveSettings();
 		});
 		
 		// Reset button handler
-		resetBtn.addEventListener('click', async () => {
-			this.setBrightnessForTheme(this.currentTheme, 0);
-			slider.value = '0';
-			valueDisplay.setText('0');
-			this.applyBrightness();
-			await this.saveSettings();
+		resetBtn.addEventListener('click', () => {
+			if (this.sliderMode === 'brightness') {
+				this.setBrightnessForTheme(this.currentTheme, 0);
+				slider.value = '0';
+				valueDisplay.setText('0');
+				this.applyBrightness();
+			} else {
+				this.setContrastForTheme(this.currentTheme, 100);
+				slider.value = '100';
+				valueDisplay.setText('100%');
+				this.applyContrast();
+			}
+			void this.saveSettings();
+		});
+		
+		// Toggle button handler
+		toggleBtn.addEventListener('click', () => {
+			if (this.sliderMode === 'brightness') {
+				// Switch to contrast mode
+				this.sliderMode = 'contrast';
+				modeIcon.setText('◐');
+				toggleBtn.setText('☀️');
+				toggleBtn.title = 'Switch to brightness control';
+				resetBtn.title = 'Reset contrast to 100%';
+				
+				const contrast = this.getContrastForTheme(this.currentTheme);
+				slider.min = '20';
+				slider.max = '200';
+				slider.step = '5';
+				slider.value = contrast.toString();
+				valueDisplay.setText(`${contrast}%`);
+			} else {
+				// Switch to brightness mode
+				this.sliderMode = 'brightness';
+				modeIcon.setText('☀️');
+				toggleBtn.setText('◐');
+				toggleBtn.title = 'Switch to contrast control';
+				resetBtn.title = 'Reset brightness to 0';
+				
+				const brightness = this.getBrightnessForTheme(this.currentTheme);
+				slider.min = '-200';
+				slider.max = '100';
+				slider.step = '5';
+				slider.value = brightness.toString();
+				valueDisplay.setText(`${brightness}`);
+			}
 		});
 		
 		// Store references for updates
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		(this.statusBarItem as any).slider = slider;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		(this.statusBarItem as any).valueDisplay = valueDisplay;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		(this.statusBarItem as any).modeIcon = modeIcon;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		(this.statusBarItem as any).toggleBtn = toggleBtn;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		(this.statusBarItem as any).resetBtn = resetBtn;
 	}
 
 	getCurrentTheme(): string {
 		// Get the current theme from app
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const theme = (this.app.vault as any).config?.cssTheme || 'default';
 		return theme;
 	}
@@ -137,6 +223,23 @@ export default class DarkSlidePlugin extends Plugin {
 		this.settings.brightnessLevel = brightness; // Update legacy setting too
 	}
 
+	getContrastForTheme(theme: string): number {
+		if (this.settings.perThemeContrast[theme] !== undefined) {
+			return this.settings.perThemeContrast[theme];
+		}
+		return this.settings.contrastLevel || 100;
+	}
+
+	validateContrast(contrast: number): number {
+		// Limit contrast to 20-200% to prevent washout
+		return Math.max(20, Math.min(200, contrast));
+	}
+
+	setContrastForTheme(theme: string, contrast: number) {
+		this.settings.perThemeContrast[theme] = contrast;
+		this.settings.contrastLevel = contrast;
+	}
+
 	setupThemeWatcher() {
 		// Watch for theme changes in the app
 		this.registerEvent(
@@ -145,8 +248,9 @@ export default class DarkSlidePlugin extends Plugin {
 				if (newTheme !== this.currentTheme) {
 					this.currentTheme = newTheme;
 					
-					// Apply brightness for new theme
+					// Apply brightness and contrast for new theme
 					this.applyBrightness();
+					this.applyContrast();
 					
 					// Update status bar slider
 					this.updateStatusBarSlider();
@@ -156,26 +260,43 @@ export default class DarkSlidePlugin extends Plugin {
 	}
 
 	updateStatusBarSlider() {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const slider = (this.statusBarItem as any).slider as HTMLInputElement;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const valueDisplay = (this.statusBarItem as any).valueDisplay as HTMLElement;
 		if (slider && valueDisplay) {
-			const brightness = this.getBrightnessForTheme(this.currentTheme);
-			slider.value = brightness.toString();
-			valueDisplay.setText(`${brightness}`);
+			if (this.sliderMode === 'brightness') {
+				const brightness = this.getBrightnessForTheme(this.currentTheme);
+				slider.value = brightness.toString();
+				valueDisplay.setText(`${brightness}`);
+			} else {
+				const contrast = this.getContrastForTheme(this.currentTheme);
+				slider.value = contrast.toString();
+				valueDisplay.setText(`${contrast}%`);
+			}
 		}
 	}
 
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-		// Ensure perThemeBrightness exists (backward compatibility)
+		// Ensure per-theme settings exist (backward compatibility)
 		if (!this.settings.perThemeBrightness) {
 			this.settings.perThemeBrightness = {};
+		}
+		if (!this.settings.perThemeContrast) {
+			this.settings.perThemeContrast = {};
 		}
 	}
 
 	async saveSettings() {
 		await this.saveData(this.settings);
 		this.applyBrightness();
+		this.applyContrast();
+	}
+
+	applyContrast() {
+		const contrast = this.validateContrast(this.getContrastForTheme(this.currentTheme));
+		document.body.style.setProperty('filter', `contrast(${contrast}%)`);
 	}
 
 	applyBrightness() {
@@ -205,14 +326,15 @@ export default class DarkSlidePlugin extends Plugin {
 					// Increase opacity more aggressively for extreme values
 					overlayOpacity = absValue <= 100 ? absValue / 100 : Math.min(1, 1 + (absValue - 100) / 200);
 				} else {
-					// Brighter: Use a lightened version of the theme color
-					// Blend toward lighter version of same hue
-					const lighterRgb = {
-						r: Math.min(255, Math.floor(rgb.r + (255 - rgb.r) * 0.7)),
-						g: Math.min(255, Math.floor(rgb.g + (255 - rgb.g) * 0.7)),
-						b: Math.min(255, Math.floor(rgb.b + (255 - rgb.b) * 0.7))
+					// Brighter: Multiply the theme color to make it genuinely brighter
+					// Use a multiplier that increases brightness while preserving hue
+					const brightFactor = 1 + (brightness / 100) * 1.5; // Max 2.5x brighter at +100
+					const brighterRgb = {
+						r: Math.min(255, Math.floor(rgb.r * brightFactor)),
+						g: Math.min(255, Math.floor(rgb.g * brightFactor)),
+						b: Math.min(255, Math.floor(rgb.b * brightFactor))
 					};
-					overlayColor = `${lighterRgb.r}, ${lighterRgb.g}, ${lighterRgb.b}`;
+					overlayColor = `${brighterRgb.r}, ${brighterRgb.g}, ${brighterRgb.b}`;
 					overlayOpacity = brightness / 100;
 				}
 				
@@ -277,64 +399,60 @@ class BrightnessSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		containerEl.createEl('h2', {text: 'DarkSlide'});
+		new Setting(containerEl).setName('DarkSlide').setHeading();
 
-	containerEl.createEl('p', {
-		text: 'Adjust the brightness of background colors in your current theme. Negative values make it darker (down to -200 for pure black), positive values make it brighter.',
-		cls: 'setting-item-description'
-	});
-
-		// Show current theme
-		containerEl.createEl('p', {
-			text: `Current theme: ${this.plugin.currentTheme || 'default'}`,
-			cls: 'setting-item-description'
-		});
-		containerEl.createEl('p', {
-			text: 'Brightness settings are saved per-theme.',
-			cls: 'setting-item-description'
-		});
+		new Setting(containerEl)
+			.setName('Show status bar')
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.showStatusBar)
+				.onChange(async (value) => {
+					this.plugin.settings.showStatusBar = value;
+					await this.plugin.saveSettings();
+					this.plugin.toggleStatusBar(value);
+				}));
 
 		const currentBrightness = this.plugin.getBrightnessForTheme(this.plugin.currentTheme);
 
-		// Create a div to show the current brightness value
-		const valueDisplay = containerEl.createEl('div', {
-			text: `Current brightness: ${currentBrightness}%`,
-			cls: 'brightness-value-display'
-		});
-
 		new Setting(containerEl)
-			.setName('Brightness Level')
-			.setDesc('Adjust background brightness for current theme (-200 = pure black, 0 = normal, +100 = brightest)')
+			.setName('Brightness')
 			.addSlider(slider => slider
 				.setLimits(-200, 100, 5)
 				.setValue(currentBrightness)
 				.setDynamicTooltip()
-				.onChange(async (value) => {
+				.onChange((value) => {
 					this.plugin.setBrightnessForTheme(this.plugin.currentTheme, value);
-					await this.plugin.saveSettings();
-					valueDisplay.setText(`Current brightness: ${value}%`);
+					void this.plugin.saveSettings();
 					this.plugin.updateStatusBarSlider();
-				}));
-
-		// Add a reset button
-		new Setting(containerEl)
-			.setName('Reset to Default')
-			.setDesc('Reset brightness to 0 (no change) for current theme')
-			.addButton(button => button
-				.setButtonText('Reset')
-				.onClick(async () => {
+				}))
+			.addExtraButton(button => button
+				.setIcon('reset')
+				.setTooltip('Reset')
+				.onClick(() => {
 					this.plugin.setBrightnessForTheme(this.plugin.currentTheme, 0);
-					await this.plugin.saveSettings();
+					void this.plugin.saveSettings();
 					this.plugin.updateStatusBarSlider();
-					this.display(); // Refresh the settings tab
+					this.display();
 				}));
 
-		// Add some helpful tips
-		containerEl.createEl('h3', {text: 'Tips'});
-		const tipsList = containerEl.createEl('ul');
-	tipsList.createEl('li', {text: 'Use negative values (-50 to -200) to make dark themes darker (extreme values approach pure black)'});
-		tipsList.createEl('li', {text: 'Use positive values (+20 to +50) to brighten overly dark themes'});
-		tipsList.createEl('li', {text: 'Changes are applied immediately as you move the slider'});
-		tipsList.createEl('li', {text: 'Settings are saved per vault'});
+		const currentContrast = this.plugin.getContrastForTheme(this.plugin.currentTheme);
+
+		new Setting(containerEl)
+			.setName('Contrast')
+			.addSlider(slider => slider
+				.setLimits(20, 200, 5)
+				.setValue(currentContrast)
+				.setDynamicTooltip()
+				.onChange((value) => {
+					this.plugin.setContrastForTheme(this.plugin.currentTheme, value);
+					void this.plugin.saveSettings();
+				}))
+			.addExtraButton(button => button
+				.setIcon('reset')
+				.setTooltip('Reset')
+				.onClick(() => {
+					this.plugin.setContrastForTheme(this.plugin.currentTheme, 100);
+					void this.plugin.saveSettings();
+					this.display();
+				}));
 	}
 }
