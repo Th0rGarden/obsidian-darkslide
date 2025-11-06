@@ -11,25 +11,13 @@ Ever find a theme you love, but it's just a bit too dark? Or maybe it's too brig
 ![License](https://img.shields.io/badge/license-Proprietary-red)
 ![Version](https://img.shields.io/badge/version-1.2.0-blue)
 
-## When you might use this
-
-I made this because I kept finding themes I liked, but they were always just a bit too dark or too bright for different times of day. Maybe you:
-
-- Love a theme but it's too dark for daytime work
-- Have a dark theme that's not quite dark enough
-- Want to go extra dark for focus sessions without switching themes
-- Work in different lighting throughout the day
-- Just like tweaking things until they feel right
-
 ## How to use it
 
-DarkSlide adds a brightness slider to your status bar (bottom right corner of Obsidian, next to a sun icon ☀️).
+DarkSlide adds a slider to your status bar (bottom right corner, next to a sun icon ☀️).
 
-**Drag left** to make things darker, **drag right** to make things brighter, or **click the reset button** (↺) to return to normal.
+**Drag** the slider to adjust brightness. **Click the toggle button** (◐) to switch to contrast mode. **Click reset** (↺) to return to defaults.
 
-Changes happen instantly as you move the slider.
-
-Each theme remembers its own brightness setting. 
+Changes happen instantly. Each theme remembers its own brightness and contrast settings.
 
 It works everywhere—the editor, sidebars, tabs, modals, and plugin panels—without modifying theme files.
 
