@@ -11,7 +11,7 @@ Ever find a theme you love, but it's just a bit too dark? Or maybe it's too brig
 ![License](https://img.shields.io/badge/license-Proprietary-red)
 ![Version](https://img.shields.io/badge/version-1.1.0-blue)
 
-> **Important note:** This isn't a theme switcher. It adjusts the brightness of whatever theme you're already using. Think of it like a brightness dial for your current theme.
+> **Important note:** This is NOT a theme light/dark mode switcher. It adjusts the brightness of whatever theme you're already using. Think of it like a brightness dial for your current theme.
 
 ## When you might use this
 
