@@ -1,7 +1,7 @@
 {
   "id": "darkslide",
   "name": "DarkSlide",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "minAppVersion": "0.15.0",
   "description": "Dial in the perfect brightness for any Obsidian theme. Adjust darkness with a status bar slider while preserving theme colors.",
   "author": "ThorGarden",

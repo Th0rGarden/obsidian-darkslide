@@ -9,7 +9,7 @@ Ever find a theme you love, but it's just a bit too dark? Or maybe it's too brig
 </p>
 
 ![License](https://img.shields.io/badge/license-Proprietary-red)
-![Version](https://img.shields.io/badge/version-1.1.0-blue)
+![Version](https://img.shields.io/badge/version-1.2.0-blue)
 
 > **Important note:** This isn't a theme switcher. It adjusts the brightness of whatever theme you're already using. Think of it like a brightness dial for your current theme.
 
@@ -46,6 +46,14 @@ DarkSlide is pending approval for the Obsidian Community Plugins marketplace.
 3. Run "BRAT: Add a beta plugin for testing"
 4. Enter: `Th0rGarden/obsidian-darkslide`
 5. Enable DarkSlide in Settings → Community Plugins
+
+## What's new in v1.2
+
+- **Contrast control**: New contrast slider lets you adjust contrast independently from brightness (20-200%)
+- **Dual-mode status bar**: Toggle between brightness and contrast controls directly in the status bar
+- **Revamped settings**: Cleaner settings panel with separate controls for brightness and contrast
+- **Per-theme contrast**: Each theme remembers its own contrast setting, just like brightness
+- **Status bar toggle**: Option to hide the status bar slider if you prefer using the settings panel
 
 ## What's new in v1.1
 
