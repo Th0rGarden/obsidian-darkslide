@@ -13,7 +13,11 @@
 
 DarkSlide adds a slider to your status bar (bottom right corner, next to a sun icon ☀️).
 
-**Drag** the slider to adjust brightness. **Click the toggle button** (◐) to switch to contrast mode. **Click reset** (↺) to return to defaults.
+**Drag** the slider to adjust brightness. 
+
+**Click the toggle button** (◐) to switch to contrast mode. 
+
+**Click reset** (↺) to return to defaults.
 
 Changes happen instantly. Each theme remembers its own brightness and contrast settings.
 
