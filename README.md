@@ -2,7 +2,7 @@
 
 **Dial in the perfect brightness for any Obsidian theme.**
 
-Ever find a theme you love, but it's just a bit too dark? Or maybe it's too bright when you're working late at night? DarkSlide adds a simple slider to your status bar that lets you adjust how dark or light your theme looks—without actually switching themes.
+Ever find a theme you love, but it's just a bit too dark? Or maybe it's too bright when you're working late at night? DarkSlide adds a simple slider to your status bar that lets you precisely adjust how dark or light your theme looks.
 
 <p align="center">
   <img src="screenshot.png" width="300" alt="DarkSlide in action">
@@ -10,8 +10,6 @@ Ever find a theme you love, but it's just a bit too dark? Or maybe it's too brig
 
 ![License](https://img.shields.io/badge/license-Proprietary-red)
 ![Version](https://img.shields.io/badge/version-1.1.0-blue)
-
-> **Important note:** This is NOT a theme light/dark mode switcher. Think of it like a brightness dial for your current theme.
 
 ## When you might use this
 
